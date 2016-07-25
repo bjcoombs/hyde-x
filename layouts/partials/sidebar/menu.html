@@ -1,6 +1,25 @@
 <ul class="sidebar-nav">
-    <li class="sidebar-nav-item"><a href="{{ .Site.BaseURL }}">{{ if isset .Site.Params "home"}}{{ .Site.Params.home }}{{ else }}Blog{{ end }}</a></li>
+    {{ $currentNode := . }}
     {{ range .Site.Menus.main }}
-    <li class="sidebar-nav-item">{{ .Pre }}<a href="{{ .URL | absURL }}">{{ .Name }}</a></li>
+        {{ if .HasChildren }}
+            <li class="sub-menu{{if $currentNode.HasMenuCurrent "main" . }} active{{end}}">
+                <a href="javascript:;" class="">
+                    {{ .Pre }}
+                    <span>{{ .Name }}</span>
+                    <span class="menu-arrow fa {{if $currentNode.HasMenuCurrent "main" . }}fa-angle-down{{else}}fa-angle-right{{end}}"></span>
+                </a>
+            <ul class="sub{{if $currentNode.HasMenuCurrent "main" . }} open{{end}}">
+                {{ range .Children }}
+                <li  class="{{if $currentNode.IsMenuCurrent "main" . }}active{{end}}"><a href="{{.URL}}">{{ .Name }}</a></li>
+                {{ end }}
+            </ul>
+        {{else}}
+            <li class="sidebar-nav-item">
+                <a class="sidebar-nav-item" href="{{.URL}}">
+                    {{ .Pre }}
+                    <span>{{ .Name }}</span>
+                </a>
+            </li>
+        {{end}}
     {{end}}
 </ul>

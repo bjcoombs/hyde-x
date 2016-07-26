@@ -2,20 +2,20 @@
     {{ $currentNode := . }}
     {{ range .Site.Menus.main }}
         {{ if .HasChildren }}
-            <li class="sub-menu{{if $currentNode.HasMenuCurrent "main" . }} active{{end}}">
+            <li class="sub-nav-item {{if $currentNode.HasMenuCurrent "main" . }}active{{end}}">
                 <a href="javascript:;" class="">
                     {{ .Pre }}
                     <span>{{ .Name }}</span>
                     <span class="menu-arrow fa {{if $currentNode.HasMenuCurrent "main" . }}fa-angle-down{{else}}fa-angle-right{{end}}"></span>
                 </a>
-            <ul class="sub{{if $currentNode.HasMenuCurrent "main" . }} open{{end}}">
+            <ul class="sub {{if $currentNode.HasMenuCurrent "main" . }}open{{end}}">
                 {{ range .Children }}
-                <li  class="{{if $currentNode.IsMenuCurrent "main" . }}active{{end}}"><a href="{{.URL}}">{{ .Name }}</a></li>
+                <li  class="sidebar-nav-item  {{if $currentNode.IsMenuCurrent "main" . }}active{{end}}"><a href="{{.URL}}">{{ .Name }}</a></li>
                 {{ end }}
             </ul>
         {{else}}
             <li class="sidebar-nav-item">
-                <a class="sidebar-nav-item" href="{{.URL}}">
+                <a class="sidebar-nav-item {{if $currentNode.IsMenuCurrent "main" . }}active{{end}}" href="{{.URL}}">
                     {{ .Pre }}
                     <span>{{ .Name }}</span>
                 </a>
